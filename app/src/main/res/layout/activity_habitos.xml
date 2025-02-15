@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HabitosActivity">
+
+    <!-- RecyclerView para listar os hábitos -->
+
+    <!-- FloatingActionButton para adicionar hábitos -->
+
+    <TextView
+        android:id="@+id/tvDataAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data: 19/12/2024"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerHabitos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.974" />
+
+    <Button
+        android:id="@+id/btnSelecionarData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Selecionar Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barChartFrequencia" />
+
+    <ImageButton
+        android:id="@+id/pomodoro"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:src="@drawable/clock"
+        app:layout_constraintBottom_toTopOf="@+id/pieChartMinimalista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.401"
+        app:tint="@android:color/darker_gray"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerHabitos"
+        android:layout_width="418dp"
+        android:layout_height="562dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/fabAddHabito"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.927"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="14dp"
+        tools:listitem="@layout/item_habito" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddHabito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="195dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="@string/add_habit"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white"
+        app:maxImageSize="40dp"/>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChartMinimalista"
+        android:layout_width="190dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChartFrequencia"
+        android:layout_width="223dp"
+        android:layout_height="141dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="138dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="48dp"
+        android:text="   Study Track"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="14dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

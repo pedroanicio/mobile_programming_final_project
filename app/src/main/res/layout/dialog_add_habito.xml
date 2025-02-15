@@ -1,0 +1,49 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edtNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome do Hábito"
+        android:inputType="text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edtTempoMeta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Meta de Tempo (minutos)"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/edtNome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/txtDataCriacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Data de Criação: "
+        app:layout_constraintTop_toBottomOf="@id/edtTempoMeta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        app:layout_constraintTop_toBottomOf="@id/txtDataCriacao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

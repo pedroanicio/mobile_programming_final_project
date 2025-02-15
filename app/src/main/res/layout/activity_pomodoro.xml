@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/edtTempoFoco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Tempo de foco (minutos)"
+        android:inputType="number"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/edtTempoPausa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Tempo de pausa (minutos)"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/edtTempoFoco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar"
+        app:layout_constraintTop_toBottomOf="@id/edtTempoPausa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pausar"
+        app:layout_constraintTop_toBottomOf="@id/btnStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reiniciar"
+        app:layout_constraintTop_toBottomOf="@id/btnPause"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/btnReset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:id="@+id/tvModo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo: Foco"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/edtTempoPausa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="400dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

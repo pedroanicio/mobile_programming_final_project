@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNomeHabito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do Hábito"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTempoMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meta 0 minutos"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/tvTempoEstudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estudado hoje: 0 minutos"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnStart"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#7500BE"
+        android:contentDescription="TODO"
+        android:padding="8dp"
+        android:src="@drawable/play2"
+        app:tint="@android:color/white"
+        android:text=""
+        />
+</LinearLayout>
