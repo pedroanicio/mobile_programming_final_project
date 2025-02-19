@@ -43,10 +43,10 @@
         android:src="@drawable/clock"
         app:layout_constraintBottom_toTopOf="@+id/pieChartMinimalista"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
+        app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401"
+        app:layout_constraintVertical_bias="0.76"
         app:tint="@android:color/darker_gray"
         tools:ignore="MissingConstraints" />
 

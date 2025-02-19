@@ -5,4 +5,9 @@ data class Habito (
     val nome: String,
     val tempoMeta: Int,
     val dataCriacao: Long
-)
+) {
+    override fun toString(): String {
+        return nome
+    }
+}
+

@@ -1,6 +1,6 @@
 package com.example.trabalhofinalprogramacaomobile.model
 
-class ProgressoDiario(
+data class ProgressoDiario(
     val id: Int? = null,
     val habitoId: Int,
     val data: String, // yyyy-MM-dd

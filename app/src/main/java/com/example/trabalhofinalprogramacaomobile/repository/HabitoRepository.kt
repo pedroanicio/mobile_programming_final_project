@@ -66,4 +66,26 @@ class HabitoRepository(context: Context) {
         return result
     }
 
+    fun getIdDoHabito(nome: String): Int {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            DatabaseHelper.TABLE_HABITOS,
+            arrayOf(DatabaseHelper.COLUMN_HABITO_ID),
+            "${DatabaseHelper.COLUMN_HABITO_NOME} = ?",
+            arrayOf(nome),
+            null, null, null
+        )
+
+        val habitoId = if (cursor.moveToFirst()) {
+            cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_HABITO_ID))
+        } else {
+            -1 // Retorna -1 caso não encontre o hábito
+        }
+
+        cursor.close()
+        db.close()
+        return habitoId
+    }
+
+
 }

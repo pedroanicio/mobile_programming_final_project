@@ -2,10 +2,14 @@ package com.example.trabalhofinalprogramacaomobile.ui
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +54,8 @@ class HabitosActivity : AppCompatActivity(),
     private lateinit var btnSelecionarData: Button
     private lateinit var tvDataAtual: TextView
 
+    private lateinit var btnPomodoro: ImageButton
+
 
     private var temporizador: CountDownTimer? = null
     private var habitoAtual: Habito? = null
@@ -74,6 +80,7 @@ class HabitosActivity : AppCompatActivity(),
         pieChartMinimalista = findViewById(R.id.pieChartMinimalista)
         btnSelecionarData = findViewById(R.id.btnSelecionarData)
         tvDataAtual = findViewById(R.id.tvDataAtual)
+        btnPomodoro = findViewById(R.id.pomodoro)
 
 
 
@@ -84,6 +91,7 @@ class HabitosActivity : AppCompatActivity(),
             onItemClick = { habito ->
                 val dialog = EditHabitoDialogFragment(habito)
                 dialog.show(supportFragmentManager, "EditHabitoDialog")
+                atualizarGrafico()
                 setupPieChartMinimalista()
             },
             onStartClick = { habito ->
@@ -98,13 +106,19 @@ class HabitosActivity : AppCompatActivity(),
 
                 if (habitoAtual == habito && !isPausado) {
                     pausarTemporizador()
+                    atualizarGrafico()
+                    setupPieChartMinimalista()
                 } else {
                     iniciarTemporizador(habito)
+                    atualizarGrafico()
+                    setupPieChartMinimalista()
                 }
                 atualizarGrafico()
                 setupPieChartMinimalista()
             }
         )
+        atualizarGrafico()
+        setupPieChartMinimalista()
 
         recyclerHabitos.adapter = adapter
         recyclerHabitos.layoutManager = LinearLayoutManager(this)
@@ -115,8 +129,10 @@ class HabitosActivity : AppCompatActivity(),
         fabAddHabito.setOnClickListener {
             val dialog = AddHabitoDialogFragment()
             dialog.show(supportFragmentManager, "AddHabitoDialog")
+            atualizarGrafico()
             setupPieChartMinimalista()
         }
+        atualizarGrafico()
         setupPieChartMinimalista()
 
         pieChartMinimalista.setOnTouchListener { _, event ->
@@ -129,6 +145,11 @@ class HabitosActivity : AppCompatActivity(),
         // configurar botão de seleção de data
         btnSelecionarData.setOnClickListener {
             mostrarSeletorData()
+        }
+
+        btnPomodoro.setOnClickListener {
+            val intent = Intent(this, PomodoroActivity::class.java)
+            startActivity(intent)
         }
         atualizarDataAtual()
     }
@@ -173,7 +194,6 @@ class HabitosActivity : AppCompatActivity(),
     private fun iniciarTemporizador(habito: Habito) {
         if (habitoAtual != habito) {
             pararTemporizador()
-            atualizarGrafico()
         }
 
         habitoAtual = habito
@@ -188,19 +208,28 @@ class HabitosActivity : AppCompatActivity(),
                 progressoAtual?.tempoEstudo = (tempoDecorridoMap[habito.id!!]!! / 1000).toInt()
                 progressoDiarioMap[habito.id!!] = progressoAtual?.tempoEstudo ?: 0
                 adapter.updateHabitos(habitoRepository.getHabitos(), progressoDiarioMap)
-                atualizarGrafico()
+                runOnUiThread {
+                    atualizarGrafico()
+                    setupPieChartMinimalista()
+                }
             }
 
             override fun onFinish() {}
         }.start()
 
         isPausado = false
+
+        runOnUiThread {
+            atualizarGrafico()
+            setupPieChartMinimalista()
+        }
     }
 
     private fun pausarTemporizador() {
         temporizador?.cancel()
         isPausado = true
         atualizarGrafico()
+        setupPieChartMinimalista()
     }
 
     private fun pararTemporizador() {
@@ -208,15 +237,20 @@ class HabitosActivity : AppCompatActivity(),
         progressoAtual?.let { progresso ->
             if (progresso.id == null) {
                 progressoRepository.adicionarProgressso(progresso)
-                atualizarGrafico()
             } else {
                 progressoRepository.atualizarProgresso(progresso)
-                atualizarGrafico()
             }
         }
         habitoAtual = null
         progressoAtual = null
         isPausado = false
+
+        Handler(Looper.getMainLooper()).post {
+            atualizarGrafico()
+            setupPieChartMinimalista()
+            barChart.invalidate()
+            pieChartMinimalista.invalidate()
+        }
     }
 
     private fun loadHabitos() {
@@ -230,6 +264,7 @@ class HabitosActivity : AppCompatActivity(),
         }
         adapter.updateHabitos(habitos, progressoDiarioMap)
         atualizarGrafico()
+        setupPieChartMinimalista()
     }
     private fun atualizarGrafico() {
         val calendario = Calendar.getInstance()
@@ -264,6 +299,7 @@ class HabitosActivity : AppCompatActivity(),
 
         val barData = BarData(dataSet)
         barChart.data = barData
+        barChart.invalidate() // Força a renderização do gráfico
 
         // Configurar eixo X com os dias da semana
         val diasAbreviados = diasSemana.reversed().map { data ->
@@ -298,16 +334,17 @@ class HabitosActivity : AppCompatActivity(),
     override fun onPause() {
         super.onPause()
         pararTemporizador()
-        atualizarGrafico()
     }
 
     override fun onHabitoAdicionado(habito: Habito) {
         loadHabitos()
         atualizarGrafico()
+        setupPieChartMinimalista()
     }
 
     override fun onHabitoEditado() {
         loadHabitos()
         atualizarGrafico()
+        setupPieChartMinimalista()
     }
 }
