@@ -228,6 +228,15 @@ class HabitosActivity : AppCompatActivity(),
     private fun pausarTemporizador() {
         temporizador?.cancel()
         isPausado = true
+
+        // Salva o tempo de estudo no banco de dados
+        progressoAtual?.let { progresso ->
+            if (progresso.id == null) {
+                progressoRepository.adicionarProgressso(progresso)
+            } else {
+                progressoRepository.atualizarProgresso(progresso)
+            }
+        }
         atualizarGrafico()
         setupPieChartMinimalista()
     }
@@ -346,5 +355,11 @@ class HabitosActivity : AppCompatActivity(),
         loadHabitos()
         atualizarGrafico()
         setupPieChartMinimalista()
+    }
+    override fun onResume() {
+        super.onResume()
+        loadHabitos() // Recarrega os hábitos e atualiza a interface
+        atualizarGrafico() // Atualiza o gráfico
+        setupPieChartMinimalista() // Atualiza o gráfico de pizza minimalista
     }
 }

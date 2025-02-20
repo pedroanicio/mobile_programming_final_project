@@ -26,22 +26,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <TextView
-        android:id="@+id/txtDataCriacao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Data de Criação: "
-        app:layout_constraintTop_toBottomOf="@id/edtTempoMeta"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+
 
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        app:layout_constraintTop_toBottomOf="@id/txtDataCriacao"
+        app:layout_constraintTop_toBottomOf="@id/edtTempoMeta"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />

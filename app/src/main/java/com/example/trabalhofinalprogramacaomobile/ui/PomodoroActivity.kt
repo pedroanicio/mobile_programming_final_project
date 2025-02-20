@@ -3,9 +3,11 @@ package com.example.trabalhofinalprogramacaomobile.ui
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -13,6 +15,7 @@ import android.widget.Button
 import android.widget.Chronometer
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -37,6 +40,7 @@ class PomodoroActivity : AppCompatActivity() {
     private var tempoPausa: Long = 5 * 60 * 1000 // 5 minutos em milissegundos
     private var countDownTimer: CountDownTimer? = null
     private var isFoco: Boolean = true
+    private lateinit var tvModo: TextView
 
     private lateinit var spinnerHabitos: Spinner
     private lateinit var getHabitos: HabitoRepository
@@ -54,6 +58,7 @@ class PomodoroActivity : AppCompatActivity() {
         btnReset = findViewById(R.id.btnReset)
         edtTempoFoco = findViewById(R.id.edtTempoFoco)
         edtTempoPausa = findViewById(R.id.edtTempoPausa)
+        tvModo = findViewById(R.id.tvModo)
 
         getHabitos = HabitoRepository(this)
         progressoRepository = ProgressoRepository(this)
@@ -91,6 +96,13 @@ class PomodoroActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
+        if (!verificarPermissaoModoNaoPerturbe()) {
+            solicitarPermissaoModoNaoPerturbe()
+            Toast.makeText(this, "Por favor, conceda permissão para ativar o modo Não Perturbe.", Toast.LENGTH_LONG).show()
+        } else {
+            naoPerturbe(true)
+        }
+
         val tempoFocoInput = edtTempoFoco.text.toString().toLongOrNull()
         val tempoPausaInput = edtTempoPausa.text.toString().toLongOrNull()
 
@@ -134,6 +146,7 @@ class PomodoroActivity : AppCompatActivity() {
 
                     // Fim do tempo de foco, iniciar pausa
                     isFoco = false
+                    tvModo.text = "Modo: Pausa"
                     startTimer()
                     mostrarNotificacao("Hora da pausa!", "Descanse um pouco.")
                     Toast.makeText(this@PomodoroActivity, "Hora da pausa!", Toast.LENGTH_SHORT).show()
@@ -141,6 +154,7 @@ class PomodoroActivity : AppCompatActivity() {
                     // Fim da pausa, reiniciar foco
                     mostrarNotificacao("Hora do foco.", "Hora de estudar.")
                     isFoco = true
+                    tvModo.text = "Modo: Foco"
                     startTimer()
                     Toast.makeText(this@PomodoroActivity, "Volte ao foco!", Toast.LENGTH_SHORT).show()
                 }
@@ -160,6 +174,8 @@ class PomodoroActivity : AppCompatActivity() {
         countDownTimer?.cancel()
         chronometer.text = "00:00"
         isFoco = true
+        tvModo.text = "Modo: Foco"
+        naoPerturbe(false)
     }
 
     private fun mostrarNotificacao(titulo: String, mensagem: String){
@@ -179,5 +195,36 @@ class PomodoroActivity : AppCompatActivity() {
 
         notificationManager.notify(1, notification)
     }
+
+    private fun naoPerturbe(ativar: Boolean) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ativar) {
+                // Ativa o modo Do Not Disturb
+                notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE)
+            } else {
+                // Desativa o modo Do Not Disturb (volta ao normal)
+                notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+            }
+        }
+    }
+
+    private fun verificarPermissaoModoNaoPerturbe(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.isNotificationPolicyAccessGranted
+        } else {
+            true
+        }
+    }
+
+    private fun solicitarPermissaoModoNaoPerturbe() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val intent = Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+            startActivity(intent)
+        }
+    }
+
 
 }
