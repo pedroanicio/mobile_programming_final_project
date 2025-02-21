@@ -3,46 +3,76 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/item_background"
+    android:elevation="4dp"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/tvNomeHabito"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nome do Hábito"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold" />
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:id="@+id/tvTempoMeta"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Meta 0 minutos"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
-        <TextView
-            android:id="@+id/tvTempoEstudo"
+            <TextView
+                android:id="@+id/tvTempoMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meta: 0 minutos"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Estudado hoje: 0 minutos"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/clock"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/secondaryTextColor" />
+
+            <TextView
+                android:id="@+id/tvTempoEstudo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estudado hoje: 0 minutos"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="14sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/btnStart"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="#7500BE"
-        android:contentDescription="TODO"
-        android:padding="8dp"
+        android:layout_height="55dp"
+        android:contentDescription="Iniciar temporizador"
+        android:backgroundTint="@color/primaryColor"
+        android:padding="12dp"
         android:src="@drawable/play2"
-        app:tint="@android:color/white"
-        android:text=""
-        />
+        android:elevation="8dp"
+        android:stateListAnimator="@null"
+        app:tint="@color/white" />
 </LinearLayout>
